@@ -1,0 +1,6 @@
+<h2>Quote Vault</h2>
+<input [(ngModel)]="quote" placeholder="Enter a quote" />
+<button (click)="addQuote()">Add Quote</button>
+<ul>
+  <li *ngFor="let q of quotes">{{ q }}</li>
+</ul>
