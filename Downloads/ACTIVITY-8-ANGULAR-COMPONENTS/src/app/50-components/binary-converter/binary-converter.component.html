@@ -1,0 +1,4 @@
+<h2>Binary Converter</h2>
+<input type="number" [(ngModel)]="decimal" placeholder="Enter decimal number" />
+<button (click)="convertToBinary()">Convert</button>
+<p *ngIf="binary">Binary: {{ binary }}</p>
