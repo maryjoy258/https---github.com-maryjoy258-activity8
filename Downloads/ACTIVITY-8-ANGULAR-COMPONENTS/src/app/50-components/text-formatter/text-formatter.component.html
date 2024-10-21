@@ -1,0 +1,6 @@
+<h2>Text Formatter</h2>
+<input [(ngModel)]="text" placeholder="Enter text" />
+<button (click)="formatText('bold')">Bold</button>
+<button (click)="formatText('italic')">Italic</button>
+<button (click)="formatText('underline')">Underline</button>
+<p [innerHTML]="formattedText"></p>
