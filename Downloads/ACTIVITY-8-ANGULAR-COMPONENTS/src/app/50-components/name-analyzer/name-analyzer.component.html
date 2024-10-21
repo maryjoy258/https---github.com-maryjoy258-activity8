@@ -1,0 +1,4 @@
+<h2>Name Analyzer</h2>
+<input [(ngModel)]="name" placeholder="Enter your name" />
+<button (click)="analyzeName()">Analyze</button>
+<p *ngIf="analysis">{{ analysis }}</p>
