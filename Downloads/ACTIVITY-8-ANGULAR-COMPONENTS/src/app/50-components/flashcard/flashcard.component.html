@@ -1,0 +1,7 @@
+<h2>Flashcard</h2>
+<div>
+  <input [(ngModel)]="question" placeholder="Question" />
+  <input [(ngModel)]="answer" placeholder="Answer" />
+  <button (click)="toggleAnswer()">{{ showAnswer ? 'Hide' : 'Show' }} Answer</button>
+</div>
+<p *ngIf="showAnswer">Answer: {{ answer }}</p>
