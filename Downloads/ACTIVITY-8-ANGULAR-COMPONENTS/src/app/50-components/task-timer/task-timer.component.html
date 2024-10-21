@@ -1,0 +1,5 @@
+<h2>Task Timer</h2>
+<input type="number" [(ngModel)]="duration" placeholder="Enter duration in seconds" />
+<button (click)="startTimer()">Start Timer</button>
+<button (click)="stopTimer()">Stop Timer</button>
+<p *ngIf="timeRemaining !== null">Time Remaining: {{ timeRemaining }} seconds</p>
