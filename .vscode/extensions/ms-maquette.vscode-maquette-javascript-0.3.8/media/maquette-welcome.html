@@ -1,0 +1,103 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${stylesheetUri}">
+    <!--
+                Use a content security policy to only allow loading images from https or from our extension directory,
+                and only allow scripts that have a specific nonce.
+                -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}';">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maquette</title>
+</head>
+
+<body>
+    <div class="welcomePageContainer">
+        <div class="welcomePage" role="document">
+            <div class="title">
+                <h1 class="caption">Microsoft Maquette</h1>
+                <p class="subtitle detail">Making spatial prototyping easy, quick, and immersive.</p>
+            </div>
+            <div class="row">
+                <div class="splash">
+                    <div class="section start">
+                        <h2 class="caption">Start</h2>
+                        <ul>
+                            <li><a href="command:vscode-maquette-app.newProject">New Project</a></li>
+                            <li><a href="command:vscode-maquette-app.quickSaveProject">Quick Save Project</a></li>
+                            <li><a href="command:vscode-maquette-app.emergencySaveProject">Emergency Save Project</a></li>
+                            <li><a href="command:vscode-maquette-app.deleteAll">Delete All</a></li>
+                            <li><a href="command:vscode-maquette-app.reset">Reset</a></li>
+                        </ul>
+                        <br>
+                        <ul>
+                            <li><a href="command:vscode-maquette-app.launchTutorial">Launch Tutorial in Maquette</a></li>
+                            <li><a href="command:vscode-maquette-app.launchTutorial">End Tutorial</a></li>
+                            <li><a href="https://aka.ms/maquette-tutorials">Tutorials on YouTube</a></li>
+                        </ul>
+                       
+                    </div>
+
+
+                    <div class="section help">
+                        <h2 class="caption">Modes</h2>
+                        <ul>
+                            <li><a href="command:vscode-maquette-app.gotoStartSpace">Start Space</a> - 
+                            <a href="command:vscode-maquette-app.gotoEditor">Editor</a> -
+                            <a href="command:vscode-maquette-app.gotoPlayMode">Play</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="section help">
+                        <h2 class="caption">Help</h2>
+                        <ul>
+                            <li><a href="https://aka.ms/maquette-documentation">Documentation</a></li>
+                            <li><a href="https://www.maquette.ms/release-notes">Release Notes</a></li>
+                            <li><a href="https://aka.ms/maquette-community">Community</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="section help">
+                        <h2 class="caption">Advanced</h2>
+                        <ul>
+                            <li><a href="https://www.maquette.ms/unity-addon">Unity Add-On</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="splash">
+                    <div class="section">
+                        <h2 class="caption">Recent</h2>
+                        <ul>
+                            <li><a href="command:vscode-maquette-data.refreshRecent">Refresh</a></li>
+                        </ul>
+                        <br>
+                        <div id="recentPlaceholder">
+                            
+                        </div>
+                    </div>
+                
+                    <div class="section">
+                        <h2 class="caption">Spotlights</h2>
+                        <ul>
+                            <li><a href="command:vscode-maquette-data.refreshSpotlights">Refresh</a></li>
+                        </ul>
+                        <br>
+                        <div id="spotlightPlaceholder">
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script nonce="${nonce}" src="${scriptUri}"></script>
+</body>
+
+</html>

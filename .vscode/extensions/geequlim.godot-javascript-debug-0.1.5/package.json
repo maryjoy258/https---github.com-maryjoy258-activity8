@@ -1,0 +1,211 @@
+{
+	"name": "godot-javascript-debug",
+	"displayName": "Godot JavaScript Debugger",
+	"version": "0.1.5",
+	"publisher": "geequlim",
+	"description": "Debug the Godot Game runtime.",
+	"author": {
+		"name": "Geequlim",
+		"email": "geequlim@gmail.com"
+	},
+	"license": "MIT",
+	"keywords": [
+		"multi-root ready"
+	],
+	"engines": {
+		"vscode": "^1.33.0",
+		"node": "^14.5.0"
+	},
+	"icon": "images/godot-debug-icon.png",
+	"categories": [
+		"Debuggers"
+	],
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/GodotExplorer/godot-javascript-debug.git"
+	},
+	"bugs": {
+		"url": "https://github.com/GodotExplorer/godot-javascript-debug/issues"
+	},
+	"scripts": {
+		"prepublish": "tsc -p ./src",
+		"compile": "tsc -p ./src",
+		"tslint": "tslint ./src/**/*.ts",
+		"watch": "tsc -w -p ./src",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"package": "vsce package",
+		"publish": "vsce publish"
+	},
+	"dependencies": {
+		"@types/glob": "^7.1.3",
+		"await-notify": "1.0.1",
+		"glob": "^7.1.6",
+		"normalize-path": "^3.0.0",
+		"source-map": "^0.7.3",
+		"stream-parser": "^0.3.1",
+		"vscode-debugadapter": "1.37.0"
+	},
+	"devDependencies": {
+		"@types/mocha": "5.2.7",
+		"@types/node": "^14.0.26",
+		"mocha": "6.2.0",
+		"tslint": "5.18.0",
+		"typescript": "3.5.3",
+		"vsce": "1.66.0",
+		"vscode": "1.1.36",
+		"vscode-debugadapter-testsupport": "1.37.0"
+	},
+	"main": "./out/extension",
+	"activationEvents": [
+		"onDebug"
+	],
+	"contributes": {
+		"breakpoints": [
+			{
+				"language": "markdown"
+			}
+		],
+		"debuggers": [
+			{
+				"type": "godot-quickjs",
+				"label": "Godot JavaScript Debugger",
+				"program": "./out/debugAdapter.js",
+				"runtime": "node",
+				"configurationAttributes": {
+					"launch": {
+						"required": [
+							"program"
+						],
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Your godot executable file path",
+								"default": "/path/to/godot"
+							},
+							"args": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								},
+								"default": []
+							},
+							"cwd": {
+								"type": "string",
+								"default": "${workspaceFolder}"
+							},
+							"hostname": {
+								"type": "string",
+								"description": "The hostname used by he debug extension for incoming/outgoing sessions",
+								"default": "localhost"
+							},
+							"port": {
+								"type": "number",
+								"description": "The port used by he debug extension for incoming/outgoing sessions.",
+								"default": 0
+							},
+							"sourceMaps": {
+								"type": "boolean",
+								"description": "Use JavaScript source maps (if they exist)",
+								"default": true
+							},
+							"sourceRoot": {
+								"type": "string",
+								"default": "${workspaceRoot}/scripts",
+								"description": "The root directory of your source code"
+							},
+							"sourceMapPathOverrides": {
+								"type": "object",
+								"description": "A set of mappings for rewriting the locations of source files from what the sourcemap says, to their locations on disk.",
+								"default": {
+									"res://": "${workspaceRoot}/",
+									"webpack:///./~/*": "${workspaceRoot}/node_modules/*",
+									"webpack:///./*": "${workspaceRoot}/*",
+									"webpack:///*": "*"
+								}
+							}
+						}
+					},
+					"attach": {
+						"properties": {
+							"hostname": {
+								"type": "string",
+								"description": "The hostname used by he debug extension for incoming/outgoing sessions (connection 'mode' dependent).",
+								"default": "localhost"
+							},
+							"port": {
+								"type": "number",
+								"description": "The port used by he debug extension for incoming/outgoing sessions. (connection 'mode' dependent)",
+								"default": 0
+							},
+							"sourceMaps": {
+								"type": "boolean",
+								"description": "Use JavaScript source maps (if they exist)",
+								"default": true
+							},
+							"sourceRoot": {
+								"type": "string",
+								"default": "${workspaceRoot}/scripts",
+								"description": "The root directory of your source code"
+							},
+							"sourceMapPathOverrides": {
+								"type": "object",
+								"description": "A set of mappings for rewriting the locations of source files from what the sourcemap says, to their locations on disk.",
+								"default": {
+									"res://": "${workspaceRoot}/",
+									"webpack:///./~/*": "${workspaceRoot}/node_modules/*",
+									"webpack:///./*": "${workspaceRoot}/*",
+									"webpack:///*": "*"
+								}
+							}
+						}
+					}
+				},
+				"initialConfigurations": [
+					{
+						"type": "godot-quickjs",
+						"request": "launch",
+						"name": "Launch Godot Game",
+						"program": "/path/to/qjs"
+					}
+				],
+				"configurationSnippets": [
+					{
+						"label": "Godot JavaScript: Launch",
+						"description": "A new configuration for launching and debugging JavaScript in Godot.",
+						"body": {
+							"type": "godot-quickjs",
+							"request": "launch",
+							"name": "Launch Godot",
+							"program": "/path/to/qjs"
+						}
+					},
+					{
+						"label": "Godot JavaScript: Attach",
+						"description": "A new configuration for connect to Godot JavaScript debugger.",
+						"body": {
+							"type": "godot-quickjs",
+							"request": "attach",
+							"name": "Attach to Godot",
+							"hostname": "localhost",
+							"port": 5556
+						}
+					}
+				]
+			}
+		]
+	},
+	"__metadata": {
+		"id": "9d1a675a-c68a-45ac-b8de-44a74fc3767b",
+		"publisherId": "aad638a3-8106-4023-80fe-66580f3e3b1c",
+		"publisherDisplayName": "Geequlim",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1729263438120,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery"
+	}
+}

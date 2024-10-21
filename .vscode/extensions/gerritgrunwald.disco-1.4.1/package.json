@@ -1,0 +1,71 @@
+{
+	"name": "disco",
+	"displayName": "disco",
+	"description": "",
+	"version": "1.4.1",
+	"publisher": "GerritGrunwald",
+	"engines": {
+		"vscode": "^1.23.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.disco"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.disco",
+				"title": "foojay Discovery API"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^2.6.1",
+		"vscode": "^1.1.30",
+		"@types/node": "^7.0.43",
+		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"node-fetch": "^2.6.1",
+		"vscode-express": "^1.0.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/HanSolo/discoextension"
+	},
+	"keywords": [
+		"disco",
+		"discoapi",
+		"JDK",
+		"OpenJDK"
+	],
+	"author": "Gerrit Grunwald <ggrunwald@azul.com>",
+	"license": "Apache 2.0",
+	"bugs": {
+		"url": "https://github.com/HanSolo/discoextension/issues"
+	},
+	"icon": "discoduke.png",
+	"__metadata": {
+		"id": "576af60c-bf49-42bf-ae47-17f4031eaa91",
+		"publisherId": "22f47da7-c129-41a9-8c11-e55ebbddc5c0",
+		"publisherDisplayName": "Gerrit Grunwald",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1729263611121,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery"
+	}
+}

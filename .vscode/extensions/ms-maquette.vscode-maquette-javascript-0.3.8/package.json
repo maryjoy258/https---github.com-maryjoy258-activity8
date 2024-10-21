@@ -1,0 +1,422 @@
+{
+	"name": "vscode-maquette-javascript",
+	"displayName": "Maquette JavaScript Integration",
+	"description": "",
+	"version": "0.3.8",
+	"publisher": "ms-maquette",
+	"icon": "images/MicrosoftMaquette_Logo_128.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/stefan-msft/vscode-maquette-javascript.git"
+	},
+	"bugs": {
+		"url": "https://github.com/stefan-msft/vscode-maquette-javascript/issues"
+	},
+	"engines": {
+		"vscode": "^1.45.0"
+	},
+	"categories": [
+		"Debuggers",
+		"Programming Languages"
+	],
+	"activationEvents": [
+		"onCommand:vscode-maquette-javascript.repl",
+		"onCommand:vscode-maquette-explorer.show",
+		"onWebviewPanel:MaquetteWelcome",
+		"onCustomEditor:maquette.entity",
+		"onCustomEditor:maquette.myEntity",
+		"*"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"customEditors": [
+			{
+				"viewType": "maquette.entity",
+				"displayName": "Maquette Entity",
+				"selector": [
+					{
+						"filenamePattern": "**/mqentity/**"
+					}
+				],
+				"priority": "default"
+			},
+			{
+				"viewType": "maquette.myEntity",
+				"displayName": "Maquette Entity",
+				"selector": [
+					{
+						"filenamePattern": "*.bla"
+					}
+				]
+			}
+		],
+		"menus": {
+			"editor/title": [],
+			"view/item/context": [
+				{
+					"command": "vscode-maquette-javascript.revealSelectedFile",
+					"when": "view == maquetteFilesOutline",
+					"group": "Maquette"
+				},
+				{
+					"command": "vscode-maquette-javascript.createNewScriptFile",
+					"when": "view == maquetteFilesOutline",
+					"group": "Maquette"
+				},
+				{
+					"command": "vscode-maquette-javascript.replSelectedFile",
+					"when": "view == maquetteFilesOutline && viewItem == file",
+					"group": "inline"
+				},
+				{
+					"command": "vscode-maquette-data.refreshEntry",
+					"when": "view == maquetteDataOutline",
+					"group": "inline@5"
+				},
+				{
+					"command": "vscode-maquette-app.createCube",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "Maquette"
+				},
+				{
+					"command": "vscode-maquette-app.deleteAll",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "Maquette"
+				},
+				{
+					"command": "vscode-maquette-app.gotoEntry",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "MaquetteScene"
+				},
+				{
+					"command": "vscode-maquette-data.deleteScene",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "MaquetteScene"
+				},
+				{
+					"command": "vscode-maquette-data.addScene",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "MaquetteScene"
+				},
+				{
+					"command": "vscode-maquette-data.renameEntry",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "inline@0"
+				},
+				{
+					"command": "vscode-maquette-data.showAllEntries",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "inline@2"
+				},
+				{
+					"command": "vscode-maquette-data.hideAllEntries",
+					"when": "view == maquetteDataOutline && viewItem == maquette-scene",
+					"group": "inline@1"
+				},
+				{
+					"command": "vscode-maquette-data.toggleVisibilityEntry",
+					"when": "view == maquetteDataOutline && viewItem == maquette-entity",
+					"group": "inline"
+				},
+				{
+					"command": "vscode-maquette-data.renameEntry",
+					"when": "view == maquetteDataOutline && viewItem == maquette-entity",
+					"group": "inline"
+				},
+				{
+					"command": "vscode-maquette-app.gotoEntry",
+					"when": "view == maquetteDataOutline && viewItem == maquette-entity",
+					"group": "Maquette"
+				}
+			],
+			"view/title": [
+				{
+					"command": "vscode-maquette-data.refreshScriptPaths",
+					"when": "view == maquetteFilesOutline",
+					"group": "navigation"
+				},
+				{
+					"command": "vscode-maquette-data.refreshRoot",
+					"when": "view == maquetteDataOutline",
+					"group": "navigation"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "helpMaquette",
+				"contents": "No help available yet."
+			},
+			{
+				"view": "maquetteFilesOutline",
+				"contents": "No data available yet.\n[Refresh](command:vscode-maquette-data.refreshScriptPaths)"
+			},
+			{
+				"view": "maquetteDataOutline",
+				"contents": "No data available yet.\n[Refresh](command:vscode-maquette-data.refreshRoot)"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "maquette-explorer",
+					"title": "Maquette Explorer",
+					"icon": "media/MaquetteLogoFlatWhite.svg"
+				}
+			]
+		},
+		"views": {
+			"maquette-explorer": [
+				{
+					"id": "maquetteOutline",
+					"name": "Application"
+				},
+				{
+					"id": "maquetteFilesOutline",
+					"name": "Scripts"
+				},
+				{
+					"id": "maquetteDataOutline",
+					"name": "Data"
+				}
+			],
+			"explorer": []
+		},
+		"commands": [
+			{
+				"command": "vscode-maquette-data.saveEntryToMaquette",
+				"title": "Save to Maquette"
+			},
+			{
+				"command": "vscode-maquette-data.displayEntity",
+				"title": "Display a Maquette Entity",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-javascript.replFile",
+				"title": "Evaluate the file in JavaScript",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-javascript.repl",
+				"title": "Evaluate the text selection in JavaScript",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-javascript.ping",
+				"title": "Ping Maquette",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-data.refreshSpotlights",
+				"title": "Refresh Spotlights",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-data.refreshRecent",
+				"title": "Refresh Recent Documents",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-app.createCube",
+				"title": "Create Cube",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-app.deleteAll",
+				"title": "Delete All",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-explorer.show",
+				"title": "Show Maquette Explorer",
+				"category": "Maquette"
+			},
+			{
+				"command": "vscode-maquette-data.refreshScriptPaths",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.refreshRoot",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.refreshEntry",
+				"title": "Refresh Entry",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.showAllEntries",
+				"title": "Show All",
+				"icon": {
+					"light": "images/eye.png",
+					"dark": "images/eye.png"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.hideAllEntries",
+				"title": "Hide All",
+				"icon": {
+					"light": "images/eye-closed.png",
+					"dark": "images/eye-closed.png"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.toggleVisibilityEntry",
+				"title": "Toggle Visibility",
+				"icon": {
+					"light": "images/eye.png",
+					"dark": "images/eye.png"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.renameEntry",
+				"title": "Rename",
+				"icon": {
+					"light": "images/rename.png",
+					"dark": "images/rename.png"
+				}
+			},
+			{
+				"command": "vscode-maquette-app.gotoEntry",
+				"title": "Go to",
+				"icon": {
+					"light": "images/goto.png",
+					"dark": "images/goto.png"
+				}
+			},
+			{
+				"command": "vscode-maquette-data.deleteScene",
+				"title": "Delete Scene"
+			},
+			{
+				"command": "vscode-maquette-data.addScene",
+				"title": "Add Scene"
+			},
+			{
+				"command": "vscode-maquette-javascript.replSelectedFile",
+				"title": "Evaluate file",
+				"icon": {
+					"light": "images/run.png",
+					"dark": "images/run.png"
+				}
+			},
+			{
+				"command": "vscode-maquette-javascript.revealSelectedFile",
+				"title": "Reveal in File Explorer"
+			},
+			{
+				"command": "vscode-maquette-javascript.createNewScriptFile",
+				"title": "New Script File"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "vscode-maquette-javascript.repl",
+				"key": "ctrl+5",
+				"mac": "cmd+5",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "vscode-maquette-javascript.replFile",
+				"key": "shift+ctrl+5",
+				"mac": "shift+cmd+5",
+				"when": "editorTextFocus"
+			}
+		],
+		"languages": [
+			{
+				"id": "mqjs",
+				"aliases": [
+					"mqjs",
+					"mqJS",
+					"MQJS"
+				],
+				"extensions": [
+					".mqjs"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "mqjs",
+				"scopeName": "source.mqjs",
+				"path": "./syntaxes/mqjs.tmGrammar.json"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Maquette",
+			"properties": {
+				"maquetteJavaScript.serverPort": {
+					"type": "number",
+					"default": 13339,
+					"description": "The port number for the connection to Maquette"
+				},
+				"maquetteJavaScript.serverHost": {
+					"type": "string",
+					"default": "127.0.0.1",
+					"description": "The server name of Maquette - usually 127.0.0.1"
+				},
+				"maquetteJavaScript.serverBase": {
+					"type": "string",
+					"default": "",
+					"description": "Base path of the scripts"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
+		"test-compile": "tsc -p ./"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mkdirp": "^1.0.0",
+		"@types/mocha": "^7.0.2",
+		"@types/node": "^13.13.4",
+		"@types/rimraf": "^3.0.0",
+		"@types/vscode": "^1.44.0",
+		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"@typescript-eslint/parser": "^2.30.0",
+		"eslint": "^6.8.0",
+		"glob": "^7.1.6",
+		"mocha": "^7.1.2",
+		"ts-loader": "^7.0.3",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.3.0",
+		"webpack": "^4.43.0",
+		"webpack-cli": "^3.3.11"
+	},
+	"dependencies": {
+		"mkdirp": "^1.0.4",
+		"request": "^2.88.2",
+		"rimraf": "^3.0.2"
+	},
+	"__metadata": {
+		"id": "58b304dc-e332-480f-9b31-f8a4831294cc",
+		"publisherId": "d4dbe0db-2b4c-416b-8e70-7d8afd56ec4e",
+		"publisherDisplayName": "Maquette",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1729263423418,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery"
+	}
+}

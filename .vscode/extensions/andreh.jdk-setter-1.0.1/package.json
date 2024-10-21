@@ -1,0 +1,66 @@
+{
+	"name": "jdk-setter",
+	"displayName": "JDK Setter",
+	"description": "Sets the jdk based on the installation path of VSCode",
+	"version": "1.0.1",
+	"publisher": "Andreh",
+	"engines": {
+		"vscode": "^1.60.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "JDK Setter",
+			"properties": {
+				"jdk-setter.jdkFolderName": {
+					"type": [
+						"string",
+						"null"
+					],
+					"default": "jdk-17",
+					"description": "JDK folder name from the root of vscode installation folder"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.60.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "14.x",
+		"eslint": "^7.27.0",
+		"@typescript-eslint/eslint-plugin": "^4.26.0",
+		"@typescript-eslint/parser": "^4.26.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"typescript": "^4.3.2",
+		"vscode-test": "^1.5.2"
+	},
+	"__metadata": {
+		"id": "e8be4132-6d6e-4417-bcd6-b925b46f7689",
+		"publisherId": "6b41bf42-dd6e-4b41-8cb9-65b72cf116a8",
+		"publisherDisplayName": "Andreh",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1729263422423,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery"
+	}
+}

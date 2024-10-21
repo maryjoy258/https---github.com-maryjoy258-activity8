@@ -1,0 +1,241 @@
+{
+	"name": "openjdk-devel",
+	"version": "2.0.3",
+	"displayName": "OpenJDK Development",
+	"description": "Support for OpenJDK developers",
+	"publisher": "magicus",
+	"author": {
+		"name": "magicus"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"keywords": [
+		"jdk",
+		"openjdk",
+		"github",
+		"jbs",
+		"development"
+	],
+	"categories": [
+		"Other"
+	],
+	"icon": "media/duke-logo.png",
+	"homepage": "https://github.com/magicus/vscode-openjdk-devel",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/magicus/vscode-openjdk-devel.git"
+	},
+	"bugs": {
+		"url": "https://github.com/magicus/vscode-openjdk-devel/issues"
+	},
+	"main": "./dist/extension.js",
+	"engines": {
+		"vscode": "^1.61.0"
+	},
+	"extensionKind": [
+		"ui",
+		"workspace"
+	],
+	"activationEvents": [
+		"onView:gitHubIntegration",
+		"onView:jbsIntegration",
+		"onCommand:openjdkDevel.gitHubIntegration.refresh",
+		"onCommand:openjdkDevel.setGithubToken",
+		"onCommand:openjdkDevel.setGithubUsername",
+		"onCommand:openjdkDevel.jbsIntegration.refresh",
+		"onCommand:openjdkDevel.setJbsToken",
+		"onCommand:openjdkDevel.setJbsUsername"
+	],
+	"contributes": {
+		"configuration": {
+			"title": "OpenJDK Development",
+			"properties": {
+				"openjdkDevel.github.username": {
+					"type": "string",
+					"default": "",
+					"description": "Your GitHub user name"
+				},
+				"openjdkDevel.github.apiToken": {
+					"type": "string",
+					"default": "",
+					"markdownDescription": "Your GitHub API access token. Create a new token [at GitHub](https://github.com/settings/tokens) with `notifications` scope, and paste it here."
+				},
+				"openjdkDevel.jbs.username": {
+					"type": "string",
+					"default": "",
+					"markdownDescription": "Your JBS user name. You can look it up [at your user profile](https://bugs.openjdk.org/secure/ViewProfile.jspa)."
+				},
+				"openjdkDevel.jbs.apiToken": {
+					"type": "string",
+					"default": "",
+					"markdownDescription": "Your JBS API access token. Create a new token [at JBS](https://bugs.openjdk.org/secure/ViewProfile.jspa?selectedTab=com.atlassian.pats.pats-plugin:jira-user-personal-access-tokens) and paste it here."
+				},
+				"openjdkDevel.jbs.filters": {
+					"type": "string",
+					"default": "",
+					"markdownDescription": "Comma-separated list of JBS filter IDs to show. Check [your filter list](https://bugs.openjdk.org/secure/ManageFilters.jspa?filterView=my). The filter ID is shown as e.g. `?filter=4711` at the end of the URL."
+				},
+				"openjdkDevel.labelFilter": {
+					"type": "string",
+					"default": "",
+					"description": "Comma-separated list of labels to show Pull Requests for"
+				},
+				"openjdkDevel.repoFilter": {
+					"type": "string",
+					"default": "",
+					"description": "Comma-separated list of OpenJDK repos to show Pull Requests for"
+				},
+				"openjdkDevel.locale": {
+					"type": "string",
+					"default": "",
+					"description": "Locale descriptor to override default (e.g. 'sv-SE')"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "openjdkDevel.gitHubIntegration.refresh",
+				"title": "Refresh GitHub Integration",
+				"category": "OpenJDK Development",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "openjdkDevel.setGithubToken",
+				"title": "Setup GitHub API Token",
+				"category": "OpenJDK Development"
+			},
+			{
+				"command": "openjdkDevel.setGithubUsername",
+				"title": "Setup GitHub username",
+				"category": "OpenJDK Development"
+			},
+			{
+				"command": "openjdkDevel.jbsIntegration.refresh",
+				"title": "Refresh JBS Integration",
+				"category": "OpenJDK Development",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "openjdkDevel.setJbsToken",
+				"title": "Setup JBS API Token",
+				"category": "OpenJDK Development"
+			},
+			{
+				"command": "openjdkDevel.setJbsUsername",
+				"title": "Setup JBS username",
+				"category": "OpenJDK Development"
+			},
+			{
+				"command": "openjdkDevel.setFilter",
+				"title": "Setup PR filter",
+				"category": "OpenJDK Development"
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "openjdkDevel.gitHubIntegration.refresh",
+					"when": "view == gitHubIntegration",
+					"group": "navigation@10"
+				},
+				{
+					"command": "openjdkDevel.jbsIntegration.refresh",
+					"when": "view == jbsIntegration",
+					"group": "navigation@10"
+				}
+			]
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "openjdk-devel",
+					"title": "OpenJDK Development",
+					"icon": "media/duke-icon.svg"
+				}
+			]
+		},
+		"views": {
+			"openjdk-devel": [
+				{
+					"id": "gitHubIntegration",
+					"name": "GitHub Integration",
+					"icon": "media/github-logo.svg"
+				},
+				{
+					"id": "jbsIntegration",
+					"name": "JBS Integration",
+					"icon": "media/jbs-bug.svg"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "gitHubIntegration",
+				"contents": "In order to use the GitHub integration, you need to specify a GitHub API token.\n[Setup GitHub token](command:openjdkDevel.setGithubToken)",
+				"when": "config.openjdkDevel.github.apiToken == ''"
+			},
+			{
+				"view": "gitHubIntegration",
+				"contents": "In order to use the GitHub integration, you need to specify a GitHub user name.\n[Setup GitHub user name](command:openjdkDevel.setGithubUsername)",
+				"when": "config.openjdkDevel.github.username == ''"
+			},
+			{
+				"view": "gitHubIntegration",
+				"contents": "In order to use the GitHub integration, you need to setup PR filters for labels and/or repos.\n[Setup PR filters](command:openjdkDevel.setFilter)",
+				"when": "config.openjdkDevel.labelFilter == '' && config.openjdkDevel.repoFilter == ''"
+			},
+			{
+				"view": "jbsIntegration",
+				"contents": "In order to use the JBS integration, you need to specify a JBS user name.\n\nIt is also recommended that you add a list of JBS filter IDs.\n[Setup JBS user name](command:openjdkDevel.setJbsUsername)",
+				"when": "config.openjdkDevel.jbs.username == ''"
+			},
+			{
+				"view": "jbsIntegration",
+				"contents": "In order to use the JBS integration, you need to specify a JBS API token.\n[Setup JBS token](command:openjdkDevel.setJbsToken)",
+				"when": "config.openjdkDevel.jbs.apiToken == ''"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p -w . --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"dependencies": {
+		"node-fetch": ">=2.6.1"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.61.0",
+		"@types/glob": "^7.1.4",
+		"@types/mocha": "^9.0.0",
+		"@types/node": "14.x",
+		"@typescript-eslint/eslint-plugin": "^4.31.1",
+		"@typescript-eslint/parser": "^4.31.1",
+		"eslint": "^7.32.0",
+		"glob": "^7.1.7",
+		"mocha": "^9.1.1",
+		"typescript": "^4.4.3",
+		"ts-loader": "^9.2.5",
+		"webpack": "^5.52.1",
+		"webpack-cli": "^4.8.0",
+		"@vscode/test-electron": "^1.6.2"
+	},
+	"__metadata": {
+		"id": "e1e752cd-962d-45ff-9a3c-8e5b90bcd60b",
+		"publisherId": "3c130c11-8c32-4842-a359-1aaa8fc03087",
+		"publisherDisplayName": "Magnus Ihse Bursie",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1729263422020,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery"
+	}
+}
