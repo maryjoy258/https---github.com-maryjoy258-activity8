@@ -1,0 +1,4 @@
+<h2>XML Parser</h2>
+<textarea [(ngModel)]="xmlInput" placeholder="Enter XML here"></textarea>
+<button (click)="parseXml()">Parse XML</button>
+<pre *ngIf="parsedResult">{{ parsedResult | json }}</pre>
